@@ -17,7 +17,7 @@ namespace ShoppingCart.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public CategoryVM Get()
+        public CategoryVM GetAllCategories()
         {
             CategoryVM categoryVM = new CategoryVM();
             categoryVM.Categories = _unitofWork.Category.GetAll();
@@ -25,12 +25,10 @@ namespace ShoppingCart.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public CategoryVM Get(int id)
+        public CategoryVM GetCategoryById(int id)
         {
             CategoryVM vm = new CategoryVM();
-
-            vm.Category = _unitofWork.Category.GetT(x => x.Id == id);
-
+            vm.Category = _unitofWork.Category.GetFirstOrDefault(x => x.Id == id);
             return vm;
         }
 
@@ -58,7 +56,7 @@ namespace ShoppingCart.Web.Areas.Admin.Controllers
         [HttpPost, ActionName("Delete")]
         public void DeleteData(int? id)
         {
-            var category = _unitofWork.Category.GetT(x => x.Id == id);
+            var category = _unitofWork.Category.GetFirstOrDefault(x => x.Id == id);
             if (category == null)
             {
                 throw new Exception("Category not found");

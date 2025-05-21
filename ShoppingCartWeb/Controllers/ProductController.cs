@@ -39,7 +39,7 @@ namespace ShoppingCart.Web.Areas.Admin.Controllers
             }
             else
             {
-                vm.Product = _unitOfWork.Product.GetT(x => x.Id == id);
+                vm.Product = _unitOfWork.Product.GetFirstOrDefault(x => x.Id == id);
                 if (vm.Product == null)
                 {
                     throw new Exception("Product not found");
@@ -75,7 +75,7 @@ namespace ShoppingCart.Web.Areas.Admin.Controllers
         [HttpDelete]
         public IActionResult Delete (int? id)
         {
-            var product = _unitOfWork.Product.GetT(x => x.Id == id);
+            var product = _unitOfWork.Product.GetFirstOrDefault(x => x.Id == id);
             if (product == null)
             {
                 return Json(new { success = false, message = "Error in Fetching Data" });
